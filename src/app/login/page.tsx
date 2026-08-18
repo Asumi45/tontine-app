@@ -16,67 +16,61 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-
-    if (error) {
-      setError(error.message);
-      return;
-    }
-
+    if (error) { setError(error.message); return; }
     router.push("/");
     router.refresh();
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <form
-        onSubmit={handleLogin}
-        className="w-full max-w-sm space-y-4 rounded-lg bg-white p-8 shadow"
-      >
-        <h1 className="text-2xl font-bold text-center">Connexion Tontine</h1>
-
-        {error && (
-          <p className="text-sm text-red-600 bg-red-50 p-2 rounded">
-            {error}
-          </p>
-        )}
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Email</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded border px-3 py-2"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Mot de passe</label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded border px-3 py-2"
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded bg-blue-600 py-2 text-white font-medium hover:bg-blue-700 disabled:opacity-50"
+    <div className="min-h-screen flex items-center justify-center bg-paper px-4">
+      <div className="w-full max-w-sm animate-fade-up">
+        <div className="h-2 w-full rounded-t-2xl overflow-hidden bg-gradient-to-r from-gold via-rose to-coral animate-gradient" />
+        <form
+          onSubmit={handleLogin}
+          className="bg-white rounded-b-2xl shadow-xl p-8 space-y-5 border border-rose/40"
         >
-          {loading ? "Connexion..." : "Se connecter"}
-        </button>
-      </form>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-sage font-mono mb-1">Tontine familiale</p>
+            <h1 className="font-display text-3xl font-bold text-ink">Bon retour</h1>
+          </div>
+
+          {error && (
+            <p className="text-sm text-coral bg-coral/10 px-3 py-2 rounded-lg">{error}</p>
+          )}
+
+          <div>
+            <label className="block text-xs font-medium text-ink/50 mb-1 uppercase tracking-wide">Email</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-xl border border-rose/50 px-3 py-2.5 font-sans focus:outline-none focus:ring-2 focus:ring-gold/50 transition-shadow"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-ink/50 mb-1 uppercase tracking-wide">Mot de passe</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-xl border border-rose/50 px-3 py-2.5 font-sans focus:outline-none focus:ring-2 focus:ring-gold/50 transition-shadow"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-gold py-2.5 text-ink font-semibold hover:brightness-105 active:scale-[0.98] transition-all disabled:opacity-50"
+          >
+            {loading ? "Connexion..." : "Se connecter"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
